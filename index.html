@@ -14,7 +14,7 @@
         /* Pengaturan Halaman Cetak Standar A4 */
         @page {
             size: A4;
-            margin: 0;
+            margin: 0mm; /* Nolkan margin browser untuk kontrol penuh */
         }
 
         body {
@@ -69,10 +69,13 @@
         }
 
         @media print {
-            body {
+            body, html {
                 background: white;
                 color: black;
                 margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
             }
             header, .no-print, button, .print-hidden, ::-webkit-scrollbar, .toolbar {
                 display: none !important;
@@ -85,12 +88,14 @@
             }
             .a4-paper {
                 box-shadow: none;
-                /* PENTING: Mempertahankan padding/margin standar surat (2.5cm) saat dicetak */
+                /* Gunakan width 100% agar pas dengan margin printer */
+                width: 100% !important;
+                max-width: 210mm !important;
                 padding: 2.5cm !important;
-                margin: 0 auto;
-                width: 21cm;
-                min-height: 29.7cm;
+                margin: 0 auto !important;
                 border: none;
+                /* Pastikan tidak ada elemen yang memaksa lebar lebih */
+                overflow: hidden;
             }
             
             /* Reset layout for print */
