@@ -11,6 +11,12 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <style>
+        /* Pengaturan Halaman Cetak Standar A4 */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
@@ -46,11 +52,11 @@
                 0 8px 8px rgba(0,0,0,0.15);
         }
 
-        /* A4 Constraints */
+        /* A4 Constraints Preview */
         .a4-paper {
             min-height: 29.7cm;
             width: 100%;
-            max-width: 21cm;
+            max-width: 21cm; /* Lebar A4 */
             margin: 0 auto;
         }
 
@@ -66,6 +72,7 @@
             body {
                 background: white;
                 color: black;
+                margin: 0;
             }
             header, .no-print, button, .print-hidden, ::-webkit-scrollbar, .toolbar {
                 display: none !important;
@@ -78,17 +85,25 @@
             }
             .a4-paper {
                 box-shadow: none;
-                padding: 0 !important;
-                margin: 0;
-                width: 100%;
-                min-height: auto;
+                /* PENTING: Mempertahankan padding/margin standar surat (2.5cm) saat dicetak */
+                padding: 2.5cm !important;
+                margin: 0 auto;
+                width: 21cm;
+                min-height: 29.7cm;
                 border: none;
             }
+            
             /* Reset layout for print */
             .flex-col { display: block; }
             .lg\:flex-row { display: block; }
             section { padding: 0 !important; width: 100%; }
             .bg-slate-50 { background-color: white; }
+
+            /* Ensure colors match exactly */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
