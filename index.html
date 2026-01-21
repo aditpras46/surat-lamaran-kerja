@@ -3,40 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Surat Lamaran Kerja</title>
+    <title>Generator Surat Lamaran Kerja Profesional</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 24px 24px;
         }
-        /* Custom scrollbar for better look */
+        
+        .font-print {
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9; 
+            background: transparent; 
         }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1; 
-            border-radius: 4px;
+            border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8; 
         }
 
+        /* Realistic Paper Shadow */
         .paper-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 
+                0 1px 1px rgba(0,0,0,0.15), 
+                0 2px 2px rgba(0,0,0,0.15), 
+                0 4px 4px rgba(0,0,0,0.15), 
+                0 8px 8px rgba(0,0,0,0.15);
         }
 
-        /* A4 Ratio Hack for visual consistency */
+        /* A4 Constraints */
         .a4-paper {
-            min-height: 29.7cm; /* A4 height */
-            /* width: 21cm; A4 width - handled by max-width in responsive layout */ 
+            min-height: 29.7cm;
+            width: 100%;
+            max-width: 21cm;
+            margin: 0 auto;
+        }
+
+        /* Input Focus Effects */
+        .input-group:focus-within label {
+            color: #4f46e5;
+        }
+        .input-group:focus-within i {
+            color: #4f46e5;
         }
 
         @media print {
@@ -44,7 +67,7 @@
                 background: white;
                 color: black;
             }
-            header, .no-print, button, .print-hidden, ::-webkit-scrollbar {
+            header, .no-print, button, .print-hidden, ::-webkit-scrollbar, .toolbar {
                 display: none !important;
             }
             main {
@@ -62,136 +85,151 @@
                 border: none;
             }
             /* Reset layout for print */
-            .flex-col {
-                display: block;
-            }
-            .lg\:flex-row {
-                display: block;
-            }
-            section {
-                padding: 0 !important;
-            }
+            .flex-col { display: block; }
+            .lg\:flex-row { display: block; }
+            section { padding: 0 !important; width: 100%; }
+            .bg-slate-50 { background-color: white; }
         }
     </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-800 pb-10">
+<body class="min-h-screen text-slate-800 pb-12">
 
     <!-- Header -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-20 print-hidden backdrop-blur-sm bg-white/90">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 print-hidden">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-indigo-600 rounded-lg text-white">
-                    <i data-lucide="file-text" width="24" height="24"></i>
+                <div class="p-2.5 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-xl text-white shadow-lg shadow-indigo-200">
+                    <i data-lucide="file-signature" width="24" height="24"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-slate-800 tracking-tight">Lamaran<span class="text-indigo-600">Pro</span></h1>
-                    <p class="text-xs text-slate-500 font-medium">Generator Surat Lamaran Instan</p>
+                    <h1 class="text-xl font-bold text-slate-900 tracking-tight leading-none">Lamaran<span class="text-indigo-600">Pro</span></h1>
+                    <p class="text-[11px] text-slate-500 font-medium tracking-wide uppercase mt-1">Professional Letter Generator</p>
                 </div>
             </div>
-            <div class="hidden md:block text-sm text-slate-500">
-                Buat surat lamaran profesional dalam hitungan detik
+            <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+                <i data-lucide="check-circle-2" width="14" class="text-green-500"></i>
+                <span>Format Standar HRD Indonesia</span>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto mt-8 px-4 flex flex-col lg:flex-row gap-8 items-start">
         
-        <!-- Form Section (Sticky on Desktop) -->
-        <!-- Removed 'order-2 lg:order-1' to allow natural flow (Top on mobile, Left on desktop) -->
-        <section class="flex-1 lg:sticky lg:top-24 h-fit print-hidden w-full">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
-                    <h2 class="text-lg font-bold flex items-center gap-2 text-slate-800">
-                        <i data-lucide="pen-line" class="text-indigo-600" width="20"></i> Editor Data
-                    </h2>
-                    <p class="text-sm text-slate-500 mt-1">Lengkapi formulir di bawah ini, surat akan tertulis otomatis.</p>
+        <!-- Form Section -->
+        <section class="flex-1 lg:sticky lg:top-24 h-fit print-hidden w-full order-1">
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+                <div class="p-5 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex justify-between items-center">
+                    <div>
+                        <h2 class="text-lg font-bold flex items-center gap-2 text-slate-800">
+                            <i data-lucide="edit-3" class="text-indigo-600" width="18"></i> Editor Data
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">Data Anda aman dan diproses di browser ini saja.</p>
+                    </div>
                 </div>
 
-                <div class="p-6 space-y-8 max-h-[80vh] overflow-y-auto custom-scrollbar">
+                <div class="p-6 space-y-8 max-h-[75vh] overflow-y-auto custom-scrollbar">
                     
                     <!-- Group: Personal Info -->
-                    <div class="space-y-4">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                            <i data-lucide="user" width="14"></i> Data Diri
-                        </h3>
-                        <div class="grid grid-cols-1 gap-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Lengkap</label>
-                                <input type="text" id="input-fullName" placeholder="Contoh: Budi Santoso"
-                                    class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                    <div class="space-y-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                <i data-lucide="user" width="16"></i>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">Identitas Pelamar</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-5">
+                            <div class="input-group">
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Nama Lengkap</label>
+                                <div class="relative">
+                                    <input type="text" id="input-fullName" placeholder="Contoh: Budi Santoso, S.Kom"
+                                        class="w-full pl-3 p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm font-medium text-slate-700 placeholder:text-slate-400">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="input-group">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Email</label>
                                     <input type="email" id="input-email" placeholder="email@anda.com"
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">No. HP / WA</label>
+                                <div class="input-group">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">No. HP / WA</label>
                                     <input type="tel" id="input-phone" placeholder="0812xxxx"
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Kota Domisili</label>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="input-group">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Kota Domisili</label>
                                     <input type="text" id="input-city" placeholder="Jakarta" value="Jakarta"
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
                                 </div>
-                                <div class="col-span-1">
-                                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Singkat</label>
-                                     <input type="text" id="input-address" placeholder="Jl. Mawar No. 10..."
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                <div class="input-group">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Alamat Singkat</label>
+                                    <input type="text" id="input-address" placeholder="Jl. Mawar No. 10..."
+                                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="border-t border-slate-100"></div>
+                    <div class="h-px bg-slate-100"></div>
 
                     <!-- Group: Target -->
-                    <div class="space-y-4">
-                         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                            <i data-lucide="building-2" width="14"></i> Tujuan Lamaran
-                        </h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Penerima Surat (Yth.)</label>
+                    <div class="space-y-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                                <i data-lucide="building-2" width="16"></i>
+                            </div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">Tujuan Surat</h3>
+                        </div>
+
+                        <div class="space-y-5">
+                            <div class="input-group">
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Penerima (Yth.)</label>
                                 <input type="text" id="input-recipientName" placeholder="Bapak/Ibu HRD Manager" value="Bapak/Ibu HRD"
-                                    class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all outline-none text-sm">
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Perusahaan</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="input-group">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Nama Perusahaan</label>
                                     <input type="text" id="input-companyName" placeholder="PT. Sukses Jaya"
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all outline-none text-sm font-medium">
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Posisi Dilamar</label>
+                                <div class="input-group">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Posisi Dilamar</label>
                                     <input type="text" id="input-position" placeholder="Staff Admin"
-                                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all outline-none text-sm font-medium">
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Perusahaan (Opsional)</label>
-                                <input type="text" id="input-companyAddress" placeholder="Jl. Sudirman No. 1..."
-                                    class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm">
+                            <div class="input-group">
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 transition-colors">Alamat Perusahaan (Opsional)</label>
+                                <input type="text" id="input-companyAddress" placeholder="Gedung Office Tower Lt. 5, Jl. Sudirman..."
+                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all outline-none text-sm">
                             </div>
                         </div>
                     </div>
 
-                    <div class="border-t border-slate-100"></div>
+                    <div class="h-px bg-slate-100"></div>
 
                     <!-- Group: Skills -->
-                    <div class="space-y-4">
-                         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                            <i data-lucide="sparkles" width="14"></i> Isi Tambahan
-                        </h3>
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Skill & Pengalaman Singkat</label>
-                            <textarea id="input-skills" rows="4" placeholder="Saya memiliki pengalaman selama 2 tahun di bidang administrasi, mahir menggunakan Ms. Office, dan teliti dalam bekerja..."
-                                class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all outline-none text-sm leading-relaxed"></textarea>
-                            <p class="text-xs text-slate-400 mt-2 text-right">Akan muncul di paragraf ke-3</p>
+                    <div class="space-y-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-amber-600">
+                                <i data-lucide="sparkles" width="16"></i>
+                            </div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">Nilai Tambah</h3>
+                        </div>
+                        
+                        <div class="input-group bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2 transition-colors">Keahlian & Pengalaman Spesifik</label>
+                            <p class="text-xs text-slate-500 mb-3 italic">
+                                Kalimat pembuka motivasi sudah otomatis ada. Tuliskan saja skill spesifik Anda di sini.
+                            </p>
+                            <textarea id="input-skills" rows="4" placeholder="Contoh: Selain itu, saya memiliki sertifikasi Brevet A & B serta pengalaman menggunakan software Zahir Accounting selama 2 tahun..."
+                                class="w-full p-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none text-sm leading-relaxed text-slate-700"></textarea>
                         </div>
                     </div>
                 </div>
@@ -199,107 +237,129 @@
         </section>
 
         <!-- Preview Section -->
-        <!-- Removed 'order-1 lg:order-2' to allow natural flow (Bottom on mobile, Right on desktop) -->
-        <section class="flex-[1.4] flex flex-col items-center w-full">
+        <section class="flex-[1.4] flex flex-col items-center w-full order-2">
             
             <!-- Toolbar -->
-            <div class="w-full max-w-[21cm] mb-6 flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border border-slate-200 print-hidden sticky top-4 z-10">
-                <div class="flex items-center gap-2 px-2">
-                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                    <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
-                    <span class="ml-2 text-xs font-semibold text-slate-400 uppercase tracking-wide">Pratinjau</span>
+            <div class="toolbar w-full max-w-[21cm] mb-6 flex justify-between items-center bg-white p-2 pr-3 rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 sticky top-24 lg:top-6 z-20">
+                <div class="flex items-center gap-3 pl-4">
+                     <span class="flex h-3 w-3 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Pratinjau Langsung</span>
                 </div>
                 <div class="flex gap-2">
                    <button onclick="handleCopy()" id="btn-copy"
-                    class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 active:scale-95">
-                        <i data-lucide="copy" width="16"></i> <span id="btn-copy-text">Salin</span>
+                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 hover:text-slate-900 active:scale-95">
+                        <i data-lucide="copy" width="16"></i> <span id="btn-copy-text">Salin Teks</span>
                     </button>
                     <button onclick="window.print()"
-                        class="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 shadow-md shadow-indigo-200 hover:shadow-lg hover:shadow-indigo-300 transition-all active:scale-95">
-                        <i data-lucide="printer" width="16"></i> Simpan PDF
+                        class="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-indigo-600 hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 active:scale-95">
+                        <i data-lucide="printer" width="16" class="group-hover:animate-bounce"></i> Simpan PDF
                     </button>
                 </div>
             </div>
 
             <!-- The Letter Paper (A4 Style) -->
-            <div class="w-full max-w-[21cm] bg-white paper-shadow a4-paper p-8 md:p-12 lg:p-[2.5cm] text-black leading-relaxed text-justify relative group transition-all" id="letter-content">
+            <div class="a4-paper bg-white paper-shadow p-[2.5cm] text-black leading-relaxed text-justify relative group transition-all duration-500" id="letter-content">
                 
                 <!-- Hover Effect for Print Hint -->
-                <div class="absolute inset-0 bg-indigo-900/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center justify-center print-hidden rounded-sm">
-                    <span class="bg-white/90 px-4 py-2 rounded-full text-xs font-medium text-indigo-600 shadow-sm backdrop-blur-sm">Tampilan Cetak</span>
+                <div class="absolute inset-0 bg-slate-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center print-hidden rounded-sm backdrop-blur-[1px]">
+                    <span class="bg-white px-5 py-3 rounded-full text-sm font-bold text-slate-800 shadow-xl border border-slate-100 flex items-center gap-2">
+                        <i data-lucide="printer" width="16"></i> Tampilan Cetak
+                    </span>
                 </div>
 
-                <!-- Header Date & Hal -->
-                <div class="flex justify-end mb-8 font-serif">
-                    <p><span id="preview-city">Kota</span>, <span id="preview-date">Tanggal</span></p>
-                </div>
-
-                <div class="mb-8 font-serif">
-                    <p>Perihal: Lamaran Pekerjaan - <span id="preview-position-header" class="font-medium">[Posisi]</span></p>
-                    <div class="mt-6">
-                        <p>Kepada Yth.,</p>
-                        <p class="font-bold text-lg" id="preview-recipientName">Bapak/Ibu Pimpinan</p>
-                        <p class="font-bold text-lg" id="preview-companyName">[Nama Perusahaan]</p>
-                        <p id="preview-companyAddress" class="hidden text-slate-700"></p>
-                        <p>di Tempat</p>
+                <!-- Font Merriweather for the content -->
+                <div class="font-print text-[11pt] text-slate-900">
+                    
+                    <!-- Header Date & Hal -->
+                    <div class="flex justify-end mb-10">
+                        <p><span id="preview-city">Kota</span>, <span id="preview-date">Tanggal</span></p>
                     </div>
-                </div>
 
-                <!-- Body -->
-                <div class="space-y-4 font-serif text-[1.05rem] leading-[1.8]">
-                    <p>Dengan hormat,</p>
-                    
-                    <p>
-                        Berdasarkan informasi yang saya peroleh, perusahaan Bapak/Ibu sedang membuka lowongan pekerjaan. Melalui surat ini, saya bermaksud untuk melamar pekerjaan dan bergabung dengan <span id="preview-companyName-body">perusahaan Bapak/Ibu</span> untuk posisi sebagai <strong><span id="preview-position-body">[Posisi]</span></strong>.
-                    </p>
-
-                    <p>Berikut adalah data diri singkat saya:</p>
-                    
-                    <div class="pl-4 md:pl-8 my-4">
-                        <table class="w-full max-w-lg">
-                            <tbody class="align-top">
-                                <tr>
-                                    <td class="w-36 md:w-44 py-1">Nama</td>
-                                    <td class="py-1">: <span id="preview-fullName" class="font-medium">[Nama Lengkap]</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1">Alamat</td>
-                                    <td class="py-1">: <span id="preview-address">[Alamat Lengkap]</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1">No. Handphone</td>
-                                    <td class="py-1">: <span id="preview-phone">[Nomor Telepon]</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="py-1">Email</td>
-                                    <td class="py-1">: <span id="preview-email">[Email]</span></td>
-                                </tr>
-                            </tbody>
+                    <div class="mb-10">
+                        <table class="mb-6 w-full">
+                            <tr>
+                                <td class="w-16 align-top">Perihal</td>
+                                <td class="align-top">: </td>
+                                <td class="font-bold">Lamaran Pekerjaan - <span id="preview-position-header">[Posisi]</span></td>
+                            </tr>
+                            <tr>
+                                <td class="align-top">Lampiran</td>
+                                <td class="align-top">: </td>
+                                <td>1 (Satu) Berkas</td>
+                            </tr>
                         </table>
+
+                        <div class="mt-8">
+                            <p>Yth.</p>
+                            <p class="font-bold text-lg leading-tight mt-1" id="preview-recipientName">Bapak/Ibu Pimpinan</p>
+                            <p class="font-bold text-lg leading-tight" id="preview-companyName">[Nama Perusahaan]</p>
+                            <p id="preview-companyAddress" class="hidden text-slate-700 mt-1 max-w-md"></p>
+                            <p class="mt-2">di Tempat</p>
+                        </div>
                     </div>
 
-                    <p id="preview-skills">
-                        Saya memiliki motivasi kerja yang tinggi, mampu bekerja secara mandiri maupun dalam tim, serta bersedia untuk terus belajar dan mengembangkan diri. [Isi bagian keahlian di formulir untuk melengkapi paragraf ini].
-                    </p>
+                    <!-- Body -->
+                    <div class="space-y-4 leading-[1.8]">
+                        <p>Dengan hormat,</p>
+                        
+                        <p>
+                            Sehubungan dengan informasi yang saya peroleh bahwa <span id="preview-companyName-body">perusahaan Bapak/Ibu</span> sedang membutuhkan tenaga kerja, maka dengan ini saya bermaksud untuk mengajukan lamaran pekerjaan untuk menempati posisi <strong><span id="preview-position-body">[Posisi]</span></strong>.
+                        </p>
 
-                    <p>
-                        Sebagai bahan pertimbangan, saya lampirkan kelengkapan data diri saya (Curriculum Vitae) dan dokumen pendukung lainnya bersama surat ini. Besar harapan saya untuk dapat diberikan kesempatan wawancara agar saya dapat menjelaskan lebih detail mengenai potensi dan kemampuan yang saya miliki.
-                    </p>
+                        <p>Mengenai data diri saya, dapat saya jelaskan secara singkat sebagai berikut:</p>
+                        
+                        <div class="pl-4 my-4">
+                            <table class="w-full">
+                                <tbody class="align-top">
+                                    <tr>
+                                        <td class="w-32 py-1">Nama</td>
+                                        <td class="py-1 w-4">:</td>
+                                        <td class="py-1 font-semibold"><span id="preview-fullName">[Nama Lengkap]</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-1">Alamat</td>
+                                        <td class="py-1">:</td>
+                                        <td class="py-1"><span id="preview-address">[Alamat Lengkap]</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-1">No. HP/WA</td>
+                                        <td class="py-1">:</td>
+                                        <td class="py-1"><span id="preview-phone">[Nomor Telepon]</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-1">Email</td>
+                                        <td class="py-1">:</td>
+                                        <td class="py-1"><span id="preview-email">[Email]</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <p>Demikian surat lamaran ini saya buat. Atas perhatian dan kesempatan yang Bapak/Ibu berikan, saya ucapkan terima kasih.</p>
-                </div>
+                        <p id="preview-skills">
+                            <!-- Content injected via JS -->
+                        </p>
 
-                <!-- Footer -->
-                <div class="mt-16 font-serif">
-                    <p>Hormat saya,</p>
-                    <div class="h-24"></div> <!-- Space for signature -->
-                    <p class="font-bold underline text-lg" id="preview-fullName-sign">( Nama Lengkap )</p>
+                        <p>
+                            Sebagai bahan pertimbangan Bapak/Ibu, bersama surat ini saya lampirkan Curriculum Vitae (Daftar Riwayat Hidup) dan dokumen pendukung lainnya. Saya berharap Bapak/Ibu bersedia meluangkan waktu untuk memberikan kesempatan wawancara, sehingga saya dapat menjelaskan secara lebih terperinci mengenai potensi dan kemampuan saya.
+                        </p>
+
+                        <p>Demikian surat lamaran ini saya sampaikan. Atas perhatian dan kesempatan yang diberikan, saya ucapkan terima kasih.</p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="mt-16">
+                        <p>Hormat saya,</p>
+                        <div class="h-28 w-28"></div> <!-- Space for signature -->
+                        <p class="font-bold underline text-lg" id="preview-fullName-sign">( Nama Lengkap )</p>
+                    </div>
                 </div>
             </div>
             
-            <p class="text-center text-xs text-slate-400 mt-8 mb-4 print-hidden bg-white/50 px-4 py-2 rounded-full">
-                Tips: Gunakan ukuran kertas <b>A4</b> saat mencetak atau menyimpan PDF.
+            <p class="text-center text-xs text-slate-400 mt-8 mb-4 print-hidden bg-white/60 px-6 py-2 rounded-full border border-slate-100">
+                Tips: Pastikan seting printer menggunakan ukuran kertas <b>A4</b> dan matikan <i>Headers and footers</i>.
             </p>
         </section>
     </main>
@@ -308,8 +368,9 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Constants
-        const DEFAULT_SKILLS = 'Saya memiliki motivasi kerja yang tinggi, mampu bekerja secara mandiri maupun dalam tim, serta bersedia untuk terus belajar dan mengembangkan diri. [Isi bagian keahlian di formulir untuk melengkapi paragraf ini].';
+        // Constants for the static part of the sentence
+        const SKILL_OPENING = 'Saya memiliki motivasi kerja yang tinggi, jujur, mampu bekerja secara mandiri maupun dalam tim, serta bersedia untuk terus belajar dan mengembangkan diri.';
+        const SKILL_PLACEHOLDER = 'Selain itu, saya memiliki kemampuan komunikasi yang baik dan cepat beradaptasi dengan lingkungan kerja baru.';
 
         // Element Selectors
         const inputs = {
@@ -381,8 +442,15 @@
                 previews.companyAddress.classList.add('hidden');
             }
 
-            // Skills
-            previews.skills.textContent = inputs.skills.value || DEFAULT_SKILLS;
+            // Skills - Logic Change Here
+            const userSkill = inputs.skills.value.trim();
+            if (userSkill) {
+                // Ensure there is a space if the user input doesn't start with punctuation or space
+                const separator = /^[.,\s]/.test(userSkill) ? '' : ' ';
+                previews.skills.textContent = `${SKILL_OPENING}${separator}${userSkill}`;
+            } else {
+                previews.skills.textContent = `${SKILL_OPENING} ${SKILL_PLACEHOLDER}`;
+            }
         }
 
         // Event Listeners
@@ -395,18 +463,19 @@
             const letterText = document.getElementById('letter-content').innerText;
             const btn = document.getElementById('btn-copy');
             const btnText = document.getElementById('btn-copy-text');
+            const originalIcon = btn.querySelector('svg').outerHTML;
             
             navigator.clipboard.writeText(letterText).then(() => {
                 const originalClass = btn.className;
-                const originalHTML = btn.innerHTML;
-
-                btn.className = "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-emerald-100 text-emerald-700 shadow-inner";
+                
+                // Success State
+                btn.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-green-50 text-green-700 border border-green-200";
                 btn.innerHTML = `<i data-lucide="check" width="16"></i> Tersalin!`;
                 lucide.createIcons();
 
                 setTimeout(() => {
                     btn.className = originalClass;
-                    btn.innerHTML = originalHTML;
+                    btn.innerHTML = `${originalIcon} <span id="btn-copy-text">Salin Teks</span>`;
                     lucide.createIcons();
                 }, 2000);
             }).catch(err => {
